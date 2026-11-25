@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Project12.ViewModels"
+             x:Class="Project12.Views.SignUpPage"
+             x:DataType="vm:SignUpViewModel"
+             Title="SignUp">
+
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Wheat" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0.0" Color="#1A1A2E"/>
+            <GradientStop Offset="1.0" Color="#16213E"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <Grid RowDefinitions="*,Auto,*" ColumnDefinitions="*,8*,*" Padding="0,20">
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Spacing="14">
+
+                <!-- כותרת -->
+                <Label Text="הרשמה"
+                       TextColor="White"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Start"/>
+
+                <!-- שדה First Name -->
+                <Border Padding="10"
+                        Stroke="#ccc"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                    <Entry FontSize="18"
+                           Placeholder="First Name"
+                           TextColor="Wheat"
+                           Text="{Binding FirstName}"/>
+                </Border>
+
+                <!-- שדה Last Name -->
+                <Border Padding="10"
+                        Stroke="#ccc"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                    <Entry FontSize="18"
+                           Placeholder="Last Name"
+                           TextColor="Wheat"
+                           Text="{Binding LastName}"/>
+                </Border>
+
+                <!-- שדה Email עם EmailValidationBehavior -->
+                <Border Padding="10"
+                        Stroke="#ccc"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                    <Entry Keyboard="Email"
+                           FontSize="18"
+                           Placeholder="Email"
+                           TextColor="Wheat"
+                           Text="{Binding UserEmail}">
+                        <Entry.Behaviors>
+                            <toolkit:EmailValidationBehavior
+                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                ValidStyle="{StaticResource ValidEntryStyle}"
+                                Flags="ValidateOnValueChanged" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Border>
+
+                <!-- שדה סיסמה + כפתור הצג/הסתר -->
+                <Border Stroke="#ccc"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                    <Grid Padding="10" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Entry Grid.Column="0"
+                               BackgroundColor="Transparent"
+                               FontSize="18"
+                               IsPassword="{Binding EntryAsPassword}"
+                               Placeholder="סיסמה (לפחות 6 תווים)"
+                               TextColor="Wheat"
+                               VerticalOptions="Center"
+                               Text="{Binding UserPassword}"/>
+
+                        <Button Grid.Column="1"
+                                Margin="5,0,0,0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                FontSize="24"
+                                HorizontalOptions="End"
+                                FontFamily="MaterialSymbols"
+                                TextColor="White"
+                                VerticalOptions="Center"
+                                Text="{Binding PasswordIconCode}"
+                                Command="{Binding ShowPasswordCommand}"/>
+                    </Grid>
+                </Border>
+
+                <!-- שדה Mobile -->
+                <Border Padding="10"
+                        Stroke="#ccc"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                    <Entry Keyboard="Telephone"
+                           MaxLength="10"
+                           FontSize="18"
+                           Placeholder="Mobile (10 ספרות)"
+                           TextColor="Wheat"
+                           Text="{Binding Mobile}"/>
+                </Border>
+
+                <!-- כפתור SignUp -->
+                <Button CornerRadius="8"
+                        FontSize="18"
+                        HeightRequest="50"
+                        Text="SignUp"
+                        TextColor="White"
+                        BackgroundColor="#512BD4"
+                        Command="{Binding SignUpCommand}"/>
+
+                <!-- תווית הודעה -->
+                <Label FontSize="22"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding SignUpMessageVisible}"
+                       Text="{Binding SignUpMessage}"
+                       TextColor="{Binding SignUpMessageColor}"/>
+
+                <!-- קישור חזרה לדף הכניסה -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0,10,0,0">
+                    <Label Text="Already have an account?"
+                           TextColor="LightGray"
+                           FontSize="16"/>
+                    <Label Text="SignIn"
+                           TextColor="#9D7BFF"
+                           FontAttributes="Bold"
+                           TextDecorations="Underline"
+                           FontSize="16">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSignInTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
