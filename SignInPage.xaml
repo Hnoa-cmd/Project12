@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Project12.ViewModels"
+             x:Class="Project12.Views.SignInPage"
+             x:DataType="vm:SignInViewModel"
+             Title="SignIn">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0.0" Color="#1A1A2E"/>
+            <GradientStop Offset="1.0" Color="#16213E"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="*,4*,*" ColumnDefinitions="*,8*,*">
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Spacing="15">
+
+            <!-- כותרת -->
+            <Label Text="כניסה"
+                   TextColor="White"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Start"/>
+
+            <!-- שדה Email -->
+            <Border Padding="10"
+                    Stroke="#ccc"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="1">
+                <Entry Keyboard="Email"
+                       FontSize="18"
+                       Placeholder="Email"
+                       TextColor="Wheat"
+                       ReturnType="Go"
+                       Text="{Binding UserName}"/>
+            </Border>
+
+            <!-- שדה סיסמה + כפתור הצג/הסתר -->
+            <Border Stroke="#ccc"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="1">
+                <Grid Padding="10" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <Entry Grid.Column="0"
+                           BackgroundColor="Transparent"
+                           FontSize="18"
+                           IsPassword="{Binding EntryAsPassword}"
+                           Placeholder="סיסמה"
+                           TextColor="Wheat"
+                           VerticalOptions="Center"
+                           Text="{Binding UserPassword}"/>
+
+                    <Button Grid.Column="1"
+                            Margin="5,0,0,0"
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            FontSize="24"
+                            HorizontalOptions="End"
+                            FontFamily="MaterialSymbols1"
+                            TextColor="White"
+                            VerticalOptions="Center"
+                            Text="{Binding PasswordIconCode}"
+                            Command="{Binding ShowPasswordCommand}"/>
+                </Grid>
+            </Border>
+
+            <!-- כפתור SignIn -->
+            <Button CornerRadius="8"
+                    FontSize="18"
+                    HeightRequest="50"
+                    Text="SignIn"
+                    TextColor="White"
+                    BackgroundColor="#512BD4"
+                    IsEnabled="{Binding IsSignInButtonEnabled}"
+                    Command="{Binding SignInCommand}"/>
+
+            <!-- תווית הודעה (התחברות / שגיאה) -->
+            <Label FontSize="28"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding SignInMessageVisible}"
+                   Text="{Binding LoginMessage}"
+                   TextColor="{Binding SignInMessageColor}"/>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0,10,0,0">
+                <Label Text="Don't have an account?"
+                       TextColor="LightGray"
+                       FontSize="16"/>
+                <Label Text="SignUp"
+                       TextColor="#9D7BFF"
+                       FontAttributes="Bold"
+                       TextDecorations="Underline"
+                       FontSize="16">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSignUpTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
